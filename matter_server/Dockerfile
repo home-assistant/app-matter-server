@@ -25,7 +25,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG \
     BASHIO_VERSION=0.17.1 \
     TEMPIO_VERSION=2024.11.2 \
-    S6_OVERLAY_VERSION=3.1.6.2
+    S6_OVERLAY_VERSION=3.2.3.2
 
 # Base system
 WORKDIR /usr/src
