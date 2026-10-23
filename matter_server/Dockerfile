@@ -1,5 +1,5 @@
 # Base image updated by Renovate
-ARG BUILD_FROM=ghcr.io/matter-js/matterjs-server:1.4.0@sha256:54232d0d3e7dff5a54759469d2753399270412b4c30c55b31750a4595e4cb236
+ARG BUILD_FROM=ghcr.io/matter-js/matterjs-server:1.5.3@sha256:c0a816559384497f30d5cfe32dcd049fdec90c5659f1a1a86c87600fb3298595
 FROM ${BUILD_FROM}
 
 # The matter.js base image runs as an unprivileged user; the app requires root
