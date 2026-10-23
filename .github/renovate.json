@@ -1,0 +1,78 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
+  "enabledManagers": ["dockerfile", "github-actions", "custom.regex"],
+  "semanticCommits": "disabled",
+  "labels": ["dependencies"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "bashio in the Dockerfile",
+      "managerFilePatterns": ["/^matter_server/Dockerfile$/"],
+      "matchStrings": ["BASHIO_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "hassio-addons/bashio",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "tempio in the Dockerfile",
+      "managerFilePatterns": ["/^matter_server/Dockerfile$/"],
+      "matchStrings": ["TEMPIO_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "home-assistant/tempio",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "description": "s6-overlay in the Dockerfile",
+      "managerFilePatterns": ["/^matter_server/Dockerfile$/"],
+      "matchStrings": ["S6_OVERLAY_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "just-containers/s6-overlay",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.+)$",
+      "versioningTemplate": "loose"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/matter-js/matterjs-server"],
+      "versioning": "semver",
+      "sourceUrl": "https://github.com/matter-js/matterjs-server",
+      "commitMessageTopic": "Matter Server",
+      "commitMessageExtra": "to {{newValue}}"
+    },
+    {
+      "description": "Dockerfile ARGs pin image components, so title their PRs \"Update <name> to <version>\"",
+      "matchManagers": ["custom.regex"],
+      "commitMessageTopic": "{{depName}}"
+    },
+    {
+      "description": "tempio uses CalVer, so name the full version instead of the year a major update would show",
+      "matchManagers": ["custom.regex"],
+      "matchPackageNames": ["home-assistant/tempio"],
+      "commitMessageExtra": "to {{newVersion}}"
+    },
+    {
+      "description": "GitHub Actions: weekly with a 7 day cooldown, like Dependabot did",
+      "matchManagers": ["github-actions"],
+      "addLabels": ["github_actions"],
+      "schedule": ["before 8am on monday"],
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "description": "Leave runner labels and action version inputs alone, Dependabot never updated those",
+      "matchManagers": ["github-actions"],
+      "matchDepTypes": ["github-runner", "uses-with"],
+      "enabled": false
+    },
+    {
+      "description": "Our own actions that follow a branch (like home-assistant/actions@master) float on purpose. Pinning them would open a digest PR in every repository for each change to them. Our own actions on a version tag are pinned like any other.",
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["home-assistant/**"],
+      "matchCurrentValue": "/^(dev|main|master)$/",
+      "pinDigests": false
+    }
+  ]
+}
