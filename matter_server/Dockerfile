@@ -23,7 +23,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Build Args
 ARG \
-    BASHIO_VERSION=0.17.1 \
+    BASHIO_VERSION=0.19.0 \
     TEMPIO_VERSION=2024.11.2 \
     S6_OVERLAY_VERSION=3.1.6.2
 
