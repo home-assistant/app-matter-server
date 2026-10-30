@@ -23,11 +23,11 @@ extra_args=()
 
 # Delete options removed in 9.0.0 so the Supervisor does not warn that they are
 # no longer in the schema.
-options=$(bashio::addon.options)
+options=$(bashio::app.options)
 for old_key in log_level_sdk matter_sdk_wheels_version; do
   if bashio::jq.exists "${options}" ".${old_key}"; then
     bashio::log.info "Removing obsolete '${old_key}' option"
-    bashio::addon.option "${old_key}"
+    bashio::app.option "${old_key}"
   fi
 done
 
@@ -119,10 +119,10 @@ if [ -d /data/.migrations ]; then
 fi
 
 # Bind to internal hassio network only unless user requests to expose
-server_port="$(bashio::addon.port 5580)"
+server_port="$(bashio::app.port 5580)"
 if ! bashio::var.has_value "${server_port}"; then
     server_port=5580
-    extra_args+=('--listen-address' "$(bashio::addon.ip_address)")
+    extra_args+=('--listen-address' "$(bashio::app.ip_address)")
     extra_args+=('--listen-address' '127.0.0.1')  # so the base-image healthcheck (localhost) reaches us
 fi
 
