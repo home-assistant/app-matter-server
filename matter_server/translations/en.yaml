@@ -53,6 +53,12 @@ configuration:
       Matter integration's proxy support landed). Mutually exclusive with
       "Bluetooth Adapter ID" — the local adapter option is ignored with a
       warning when this is on.
+  primary_network_interface:
+    name: Primary network interface
+    description: >-
+      The primary network interface to be used by the Matter Server. When
+      not provided Home Assistant Supervisor will be queried to determine
+      the primary network interface.
   matter_server_env_vars:
     name: Matter Server environment variables
     description: >-
