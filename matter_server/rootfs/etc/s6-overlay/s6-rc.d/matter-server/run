@@ -87,6 +87,7 @@ if bashio::var.has_value "${install_target}"; then
     npm cache clean --force || true
     find "${install_dir}/node_modules" -type d -name "cjs" -path "*/@matter/*" -exec rm -rf {} + 2>/dev/null || true
     find "${install_dir}/node_modules" -type d -name "cjs" -path "*/@project-chip/*" -exec rm -rf {} + 2>/dev/null || true
+    find "${install_dir}/node_modules" -type f \( -name "*.ts" -o -name "*.mts" -o -name "*.cts" -o -name "*.d.ts.map" \) -delete 2>/dev/null || true
   fi
 fi
 
