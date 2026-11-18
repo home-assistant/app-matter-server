@@ -35,6 +35,7 @@ schema:
   default_fabric_label: match(^.{1,32}$)?
   ble_proxy: bool?
   bluetooth_adapter_id: int?
+  primary_network_interface: str?
   matter_server_args:
     - str?
   matter_server_env_vars:
