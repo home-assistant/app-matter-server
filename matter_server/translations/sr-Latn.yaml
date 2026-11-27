@@ -1,0 +1,78 @@
+---
+configuration:
+  log_level:
+    name: Nivo evidencije Matter Servera
+    description: Nivo beleženja događaja komponente Matter Server.
+  beta:
+    name: Koristi najnoviju beta verziju
+    description: >-
+      Instalira najnoviju beta verziju Matter Servera (zasnovanu na matter.js) sa npm-a
+      preko ugrađene verzije. Preporučuje se da napravite rezervnu kopiju (backup)
+      pre pokretanja aplikacije sa uključenom ovom opcijom!
+  enable_test_net_dcl:
+    name: Omogući korišćenje test-net DCL-a.
+    description: >-
+      Omogućava PAA korenske sertifikate, ažuriranja softvera i druge informacije o
+      uređajima sa test-net DCL-a. Namenjeno je isključivo za razvoj i
+      testiranje.
+  time_sync:
+    name: Sinhronizacija vremena
+    description: >-
+      Određuje da li Matter Server šalje trenutno vreme Matter uređajima.
+      "auto" (podrazumevano) uključuje ovu opciju samo kada je sat hosta NTP
+      sinhronizovan; "on" je uvek uključuje (upozorenje se beleži u evidenciju ako sat
+      hosta nije NTP sinhronizovan, jer je vreme poslato uređajima tačno koliko i
+      sat hosta); "off" je isključuje.
+  default_fabric_label:
+    name: Podrazumevana oznaka mreže
+    description: >-
+      Fiksira oznaku mreže (prikazuje se na Matter uređajima za ovaj kontroler, maks.
+      32 znaka) na ovu vrednost. Podrazumevano se koristi naziv doma iz Home Assistant-a.
+      Ovo je korisno ako se Matter Server koristi iz više Home Assistant instanci,
+      koje bi inače svaka slala svoj naziv doma kao oznaku. Kada je podešeno,
+      promena oznake putem WebSocket API-ja je
+      blokirana.
+  bluetooth_adapter_id:
+    name: ID Bluetooth adaptera (zastarelo)
+    description: >-
+      ZASTARELO: Umesto ovoga koristite opciju „Omogući BLE proksi“, koja omogućava Home
+      Assistant-u da upravlja BLE povezivanjem preko sopstvenog Bluetooth steka
+      (uključujući ESPHome BLE proksije). Ova opcija za sada još uvek radi.
+      ID BlueZ Bluetooth kontrolera koji koristi Matter Server. Ovo je
+      neophodno ako se koristi lokalno povezivanje putem Bluetooth-a. Napomena: Preporučuje
+      se povezivanje putem aplikacije Home Assistant Companion jer je
+      bolje testirano i omogućava povezivanje neposredno pored
+      samog uređaja.
+  ble_proxy:
+    name: Omogući BLE proksi
+    description: >-
+      Izlaže krajnju tačku BLE proksija Matter Servera kako bi Home Assistant
+      Matter integracija mogla da upravlja BLE povezivanjem preko sopstvenog
+      Bluetooth steka (uključujući ESPHome BLE proksije). Za korišćenje BLE proksija
+      potreban je Home Assistant 2026.06 ili noviji (gde je dodata podrška za
+      proksi u Matter integraciji). Međusobno se isključuje sa opcijom
+      „ID Bluetooth adaptera“ — opcija lokalnog adaptera se zanemaruje uz
+      upozorenje kada je ovo uključeno.
+  matter_server_env_vars:
+    name: Promenljive okruženja za Matter Server
+    description: >-
+      Dodatne promenljive okruženja koje se izvoze pre pokretanja Matter Servera.
+      Unesite po jednu stavku na listi u formatu „KLJUČ=VREDNOST“.
+  matter_server_args:
+    name: Dodatni argumenti za Matter Server
+    description: >-
+      Omogućava prosleđivanje dodatnih argumenata komandne linije Matter
+      Serveru. Koristite „--help“ za listu mogućih argumenata. Imajte na umu da
+      argumente dodaje i skripta za pokretanje kojom upravljaju druge
+      opcije aplikacije.
+  matter_server_version:
+    name: Verzija Matter Servera
+    description: >-
+      Instalira određenu verziju paketa „matter-server“ sa npm-a (ima prednost u odnosu na
+      Beta opciju). Vrednosti sa glavnom verzijom >= 3 se zanemaruju kao zaostale
+      Python Matter Server verzije; osim ako nije uključena Beta opcija, koristi se
+      ugrađena verzija. UPOZORENJE:
+      Starija verzija može imati nekompatibilan format skladištenja podataka! Koristite
+      ovu funkciju oprezno! Obavezno napravite svežu rezervnu kopiju aplikacije!
+network:
+  5580/tcp: Port WebSocket servera za Matter Server.
